@@ -1,0 +1,33 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app-from-docker-hub-via-jenkins
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: app-from-docker-hub-via-jenkins
+    spec:
+      containers:
+      - name: app-from-docker-hub-via-jenkins
+        image: superleague234208/sl-sprint6-tomcat:latest
+        ports:
+        - containerPort: 8080
+
+...
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-from-docker-hub-via-jenkins-svc
+  labels:
+    app: app-from-docker-hub-via-jenkins
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: app-from-docker-hub-via-jenkins
