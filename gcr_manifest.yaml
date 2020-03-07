@@ -1,0 +1,33 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app-from-gcr-via-jenkins
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: app-from-gcr-via-jenkins
+    spec:
+      containers:
+      - name: app-from-gcr-via-jenkins
+        image: gcr.io/gaurav-devops-project-1/sl-sprint6-tomcat
+        ports:
+        - containerPort: 8080
+
+...
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-from-gcr-via-jenkins-svc
+  labels:
+    app: aapp-from-gcr-via-jenkins
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+  selector:
+    app: app-from-gcr-via-jenkins
